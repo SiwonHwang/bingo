@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define N
-#define M 
+#define M
 
 /*
 initiate_bingo() : 빙고 테이블을 초기에 만들어주는 함수 
@@ -14,13 +14,20 @@ count_bingo() : 빙고 테이블이 채운 가로/세로/대각선 줄 수를 계산하여 반환
 */
 
 
-int initiate_bingo(void){
+int initiate_bingo();
+int ptint_bingo();
+int get_number_byMe();
+int get_number_byCom();
+int process_bingo();
+int count_bingo();
+
+
+int main(void){
 	
-	int sm[N][N];
+	int sm[N][N];s
 	int sc[N][N];
 	
-	srand((unsigned) time(NULL));
+	srand(time(NULL));
 	
 	return 0;
-	
 }
