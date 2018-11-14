@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-#define N
-#define M
+#define N 4
+#define M 3
 
 /*
 initiate_bingo() : 빙고 테이블을 초기에 만들어주는 함수 
@@ -24,10 +25,21 @@ int count_bingo();
 
 int main(void){
 	
-	int sm[N][N];s
-	int sc[N][N];
+	int Me[N][N]; //내 빙고 테이블 
+	int Com[N][N]; //컴퓨터 빙고 테이블 
+	int MeNum; //내가 선택한 숫자 
+	int ComNum; //컴퓨터가 선택한 숫자 
+	int i, j;
 	
 	srand(time(NULL));
+		for (i=0; i<N; i++)
+		{
+			for(j=0; j<N; j++)
+			{
+				printf("%d ", 1+rand()%(N*N)); 
+			}
+		printf("\n");
+		}
 	
 	return 0;
 }
