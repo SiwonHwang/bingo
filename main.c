@@ -16,60 +16,61 @@ count_bingo() : 빙고 테이블이 채운 가로/세로/대각선 줄 수를 계산하여 반환
 
 int main(void){
 	
-	int bingoMe[N][N]; //내 빙고 테이블 
-	int bingoCom[N][N]; //컴퓨터 빙고 테이블 
-	int MeNum; //내가 선택한 숫자 
-	int ComNum; //컴퓨터가 선택한 숫자 
 	
-	void initiate_bingo(N, bingoMe);
-	void print_bingo(N, bingoMe);
+	int bingoMe[N][N]; //내 빙고 테이블 
+	int bingoCom[N][N]; //컴퓨터 빙고 테이블
+	int Mechoice; //내가 선택한 숫자 
+	int Comchoice; //컴퓨터가 선택한 숫자 
+	
+	printf("빙고 게임을 시작합니다.\n");
+	printf("빙고판을 %i줄 먼저 채울 시 승리합니다.\n\n", M); 
+	
+	initiate_bingo(N, bingoMe); //내 빙고 테이블 만들어줌  
+    initiate_bingo(N, bingoCom); //컴퓨터 빙고 테이블 만들어줌  
+	  
+	print_bingo(N, bingoMe); //내 빙고 테이블 화면에 출력 
+	
+	get_number_byMe(Mechoice);
 	
 	return 0;
 }
 
 
-void initiate_bingo(int n, bingotable[n][n]){
+void initiate_bingo(int n, int bingotable[n][n]){ //bingotable = 빙고 테이블을 만드는 2차원 배열 
 	
-	int bingotable[n][n];
 	int i, j;
-	int max = n*n
+	int max = n*n;
 	
 	srand((unsigned)time(NULL));
 	
 	for (i=0; i<max; i++){
-		bingMe[0][i] = rand()%max;
+		bingotable[0][i] = 1+rand()%max; //빙고 테이블에 난수 발생  
 		
 		for (j=0; j<i; j++){
 			if (bingotable[0][j] == bingotable[0][i]){
-				i--;
-				break;
+				i--; 
+				break; //빙고 테이블 중복 제거 
 			}
 		}
 	}
 	
 }
 	
-void print_bingo(int n, bingotable[n][n]){
+void print_bingo(int n, int bingotable[n][n]){
 	
-	int bingotable[n][n];
 	int i, j;
 	
 	for (i=0; i<n; i++){
 		for (j=0; j<n; j++){
 			printf("%d ", bingotable[i][j]);
 		}
+		printf("\n"); //N*N 형태로 화면에 빙고 테이블 출력  
 	}
+	printf("\n");
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+void get_number_byMe(int i){
+		
+	printf("숫자 하나를 선택하세요 : %d\n");
+	scanf("%d", &i);
+} 
