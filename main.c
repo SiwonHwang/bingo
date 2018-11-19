@@ -21,25 +21,40 @@ int main(void){
 	int tableCom[N][N]; //컴퓨터 빙고 테이블
 	int numbyMe; //내가 선택한 숫자 
 	int numbyCom; //컴퓨터가 선택한 숫자 
+	int countMe; //내 빙고줄 수  
+	int countCom; //컴퓨터 빙고줄 수    
+	int turn=0; //turn수 선언 및 초기화  
 	
 	printf("#빙고 게임을 시작합니다.#\n");
 	printf("#빙고판을 %i줄 먼저 채울 시 승리합니다.#\n\n", M); 
 	
 	initiate_bingo(N, tableMe); //내 빙고 테이블 만들어줌  
     initiate_bingo(N, tableCom); //컴퓨터 빙고 테이블 만들어줌  
+      
     
     do
-    {
+    {	
     	print_bingo(N, tableMe); //내 빙고 테이블 화면에 출력
     	
-    	get_number_byMe(numbyMe);
-    	get_number_byCom(numbyCom);
-	}while()
-	//M빙고를 완성할 때까지 반복
+    	get_number_byMe(numbyMe); //내가 숫자 선택  
+    	get_number_byCom(numbyCom); //컴퓨터가 숫자 선택  
+    	
+    	turn++; //turn수 증가  
+    	
+	}while((countMe != M) && (countCom != M));
+	//나 혹은 컴퓨터가 M빙고를 완성하기 전까지 반복
 	
-	if 
+	if ((countMe == M) && (countCom != M)){
+		printf("#당신이 승리하였습니다.#\n");
+	}
+	else if ((countMe != M) && (countCom == M)){
+		printf("#컴퓨터가 승리하였습니다.#");
+	}
+	else if ((countMe == M) && (countCom == M)){
+		printf("#비겼습니다.#");
+	} //결과 출력  
 	  
-	
+	printf("#turn : %d회#", turn); //총 turn수 출력  
 	
 	return 0;
 }
@@ -101,7 +116,7 @@ void get_number_byCom(int numbyCom){
 	
 	int numbyMe;
 	
-	printf("\n컴퓨터가 숫자 하나를 선택합니다.");
+	printf("\n컴퓨터가 숫자 하나를 선택합니다.\n\n");
 	
 	srand((unsigned int)time(NULL)); //컴퓨터가 선택하는 숫자 랜덤 발생  
 	
