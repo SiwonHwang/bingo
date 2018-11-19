@@ -34,7 +34,8 @@ int main(void){
     
     do
     {	
-    	print_bingo(N, tableMe); //내 빙고 테이블 화면에 출력
+        printf("<현재 당신의 빙고판>\n\n");
+        print_bingo(N, tableMe); //내 빙고 테이블 화면에 출력
     	
     	get_number_byMe(numbyMe); //내가 숫자 선택  
     	get_number_byCom(numbyCom); //컴퓨터가 숫자 선택  
@@ -112,14 +113,14 @@ void get_number_byMe(int numbyMe){
 		printf("\n#현재까지 선택되지 않은 숫자 중 선택하세요.#\n\n");
 		
 		get_number_byMe(numbyMe);
-	} //선택한 숫자가 컴퓨터가 선택한 숫자와 같을 경우 다시 실행  
+	} //선택한 숫자가 컴퓨터가 선택한 숫자와 같을 경우 다시 실행 -> 실행 안됨 해결하기  
 } 
 
 void get_number_byCom(int numbyCom){
 	
 	int numbyMe;
 	
-	printf("\n컴퓨터가 숫자 하나를 선택합니다.\n\n");
+	printf("\n컴퓨터가 숫자 하나를 선택합니다.\n\n\n");
 	
 	srand((unsigned int)time(NULL)); //컴퓨터가 선택하는 숫자 랜덤 발생  
 	
