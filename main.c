@@ -39,6 +39,9 @@ int main(void){
     	get_number_byMe(numbyMe); //내가 숫자 선택  
     	get_number_byCom(numbyCom); //컴퓨터가 숫자 선택  
     	
+    	process_bingo(numbyMe, tableMe);
+    	process_bingo(numbyCom, tableMe);
+    	
     	turn++; //turn수 증가  
     	
 	}while((countMe != M) && (countCom != M));
@@ -126,3 +129,19 @@ void get_number_byCom(int numbyCom){
 		get_number_byCom(numbyCom);
 	} //랜덤 발생한 숫자가 내가 선택한 숫자와 같을 경우 다시 실행  
 }
+
+void process_bingo(int selectednum, int bingotable[N][N]){
+	
+	int i, j;
+	
+	for (i=0; i<N; i++){
+		for (j=0; j<N; j++){
+			if(bingotable[i][j] == selectednum){
+				bingotable[i][j] = -1;
+			}
+			
+		}
+    }
+}
+
+//numbyMe - call by reference 해결하기
