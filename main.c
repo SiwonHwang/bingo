@@ -17,20 +17,29 @@ count_bingo() : 빙고 테이블이 채운 가로/세로/대각선 줄 수를 계산하여 반환
 int main(void){
 	
 	
-	int bingoMe[N][N]; //내 빙고 테이블 
-	int bingoCom[N][N]; //컴퓨터 빙고 테이블
-	int Mechoice; //내가 선택한 숫자 
-	int Comchoice; //컴퓨터가 선택한 숫자 
+	int tableMe[N][N]; //내 빙고 테이블 
+	int tableCom[N][N]; //컴퓨터 빙고 테이블
+	int numbyMe; //내가 선택한 숫자 
+	int numbyCom; //컴퓨터가 선택한 숫자 
 	
-	printf("빙고 게임을 시작합니다.\n");
-	printf("빙고판을 %i줄 먼저 채울 시 승리합니다.\n\n", M); 
+	printf("#빙고 게임을 시작합니다.#\n");
+	printf("#빙고판을 %i줄 먼저 채울 시 승리합니다.#\n\n", M); 
 	
-	initiate_bingo(N, bingoMe); //내 빙고 테이블 만들어줌  
-    initiate_bingo(N, bingoCom); //컴퓨터 빙고 테이블 만들어줌  
+	initiate_bingo(N, tableMe); //내 빙고 테이블 만들어줌  
+    initiate_bingo(N, tableCom); //컴퓨터 빙고 테이블 만들어줌  
+    
+    do
+    {
+    	print_bingo(N, tableMe); //내 빙고 테이블 화면에 출력
+    	
+    	get_number_byMe(numbyMe);
+    	get_number_byCom(numbyCom);
+	}while()
+	//M빙고를 완성할 때까지 반복
+	
+	if 
 	  
-	print_bingo(N, bingoMe); //내 빙고 테이블 화면에 출력 
 	
-	get_number_byMe(Mechoice);
 	
 	return 0;
 }
@@ -69,8 +78,36 @@ void print_bingo(int n, int bingotable[n][n]){
 	printf("\n");
 }
 
-void get_number_byMe(int i){
+void get_number_byMe(int numbyMe){
+	
+	int numbyCom;
 		
-	printf("숫자 하나를 선택하세요 : %d\n");
-	scanf("%d", &i);
+	printf("숫자 하나를 선택하세요 : ");
+	scanf("%d", &numbyMe); //내가 선택하는 숫자
+	
+	if((numbyMe>N*N) || (numbyMe<1)){
+		printf("\n#1부터 %d 사이의 숫자 중 선택하세요.#\n\n", N*N);
+		
+		get_number_byMe(numbyMe);
+	} //선택한 숫자가 범위 외의 숫자일 경우 다시 실행  
+	else if(numbyMe == numbyCom){
+		printf("\n#현재까지 선택되지 않은 숫자 중 선택하세요.#\n\n");
+		
+		get_number_byMe(numbyMe);
+	} //선택한 숫자가 컴퓨터가 선택한 숫자와 같을 경우 다시 실행  
 } 
+
+void get_number_byCom(int numbyCom){
+	
+	int numbyMe;
+	
+	printf("\n컴퓨터가 숫자 하나를 선택합니다.");
+	
+	srand((unsigned int)time(NULL)); //컴퓨터가 선택하는 숫자 랜덤 발생  
+	
+	numbyCom = 1+rand()%(N*N);
+	
+	if(numbyCom == numbyMe){
+		get_number_byCom(numbyCom);
+	} //랜덤 발생한 숫자가 내가 선택한 숫자와 같을 경우 다시 실행  
+}
