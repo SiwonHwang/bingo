@@ -19,11 +19,14 @@ int main(void){
 	
 	int tableMe[N][N]; //내 빙고 테이블 
 	int tableCom[N][N]; //컴퓨터 빙고 테이블
+	
 	int numbyMe; //내가 선택한 숫자 
 	int numbyCom; //컴퓨터가 선택한 숫자 
-	int countMe; //내 빙고줄 수  
-	int countCom; //컴퓨터 빙고줄 수    
-	int turn=0; //turn수 선언 및 초기화  
+	
+	int countMe = 0; //내 빙고줄 수  
+	int countCom = 0; //컴퓨터 빙고줄 수    
+	
+	int turn = 0; //turn수 선언 및 초기화  
 	
 	printf("#빙고 게임을 시작합니다.#\n");
 	printf("#빙고판을 %i줄 먼저 채울 시 승리합니다.#\n\n", M); 
@@ -40,21 +43,32 @@ int main(void){
     	get_number_byMe(numbyMe); //내가 숫자 선택  
     	get_number_byCom(numbyCom); //컴퓨터가 숫자 선택  
     	
-    	process_bingo(numbyMe, tableMe);
-    	process_bingo(numbyCom, tableMe);
+    	process_bingo(numbyMe, tableMe); //내가 선택한 숫자로 내 빙고테이블 채우기  
+    	process_bingo(numbyCom, tableMe); //컴퓨터가 선택한 숫자로 내 빙고테이블 채우기
+    	process_bingo(numbyMe, tableCom); //내가 선택한 숫자로 컴퓨터 빙고테이블 채우기  
+    	process_bingo(numbyCom, tableCom); //컴퓨터가 선택한 숫자로 컴퓨터 빙고테이블 채우기
+		 
+    	count_bingo(tableMe, countMe); //내 빙고 테이블의 빙고 수 세기  
+    	count_bing(tableCom, countCom); //컴퓨터 빙고 테이블의 빙고 수 세기 
+		 
+    	printf("<현재 당신의 빙고 수 : %d", countMe); //현재까지의 내 빙고 수 출력  
     	
     	turn++; //turn수 증가  
     	
 	}while((countMe != M) && (countCom != M));
 	//나 혹은 컴퓨터가 M빙고를 완성하기 전까지 반복
 	
-	if ((countMe == M) && (countCom != M)){
+	
+	if ((countMe == M) && (countCom != M))
+	{
 		printf("#당신이 승리하였습니다.#\n");
 	}
-	else if ((countMe != M) && (countCom == M)){
+	else if ((countMe != M) && (countCom == M))
+	{
 		printf("#컴퓨터가 승리하였습니다.#");
 	}
-	else if ((countMe == M) && (countCom == M)){
+	else if ((countMe == M) && (countCom == M))
+	{
 		printf("#비겼습니다.#");
 	} //결과 출력  
 	  
@@ -64,7 +78,7 @@ int main(void){
 }
 
 
-void initiate_bingo(int n, int bingotable[n][n]){ //bingotable = 빙고 테이블을 만드는 2차원 배열 
+int initiate_bingo(int n, int bingotable[n][n]){ //bingotable = 빙고 테이블을 만드는 2차원 배열 
 	
 	int i, j;
 	int max = n*n;
@@ -74,8 +88,10 @@ void initiate_bingo(int n, int bingotable[n][n]){ //bingotable = 빙고 테이블을 �
 	for (i=0; i<max; i++){
 		bingotable[0][i] = 1+rand()%max; //빙고 테이블에 난수 발생  
 		
-		for (j=0; j<i; j++){
-			if (bingotable[0][j] == bingotable[0][i]){
+		for (j=0; j<i; j++)
+		{
+			if (bingotable[0][j] == bingotable[0][i])
+			{
 				i--; 
 				break; //빙고 테이블 중복 제거 
 			}
@@ -84,12 +100,14 @@ void initiate_bingo(int n, int bingotable[n][n]){ //bingotable = 빙고 테이블을 �
 	
 }
 	
-void print_bingo(int n, int bingotable[n][n]){
+int print_bingo(int n, int bingotable[n][n]){
 	
 	int i, j;
 	
-	for (i=0; i<n; i++){
-		for (j=0; j<n; j++){
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
 			printf("%d ", bingotable[i][j]);
 		}
 		printf("\n"); //N*N 형태로 화면에 빙고 테이블 출력  
@@ -97,48 +115,54 @@ void print_bingo(int n, int bingotable[n][n]){
 	printf("\n");
 }
 
-void get_number_byMe(int numbyMe){
+int get_number_byMe(int numbyMe){
 	
 	int numbyCom;
 		
 	printf("숫자 하나를 선택하세요 : ");
 	scanf("%d", &numbyMe); //내가 선택하는 숫자
 	
-	if((numbyMe>N*N) || (numbyMe<1)){
+	if((numbyMe>N*N) || (numbyMe<1))
+	{
 		printf("\n#1부터 %d 사이의 숫자 중 선택하세요.#\n\n", N*N);
 		
 		get_number_byMe(numbyMe);
 	} //선택한 숫자가 범위 외의 숫자일 경우 다시 실행  
-	else if(numbyMe == numbyCom){
+	else if(numbyMe == numbyCom)
+	{
 		printf("\n#현재까지 선택되지 않은 숫자 중 선택하세요.#\n\n");
 		
 		get_number_byMe(numbyMe);
 	} //선택한 숫자가 컴퓨터가 선택한 숫자와 같을 경우 다시 실행 -> 실행 안됨 해결하기  
 } 
 
-void get_number_byCom(int numbyCom){
+int get_number_byCom(int numbyCom){
 	
 	int numbyMe;
 	
 	printf("\n컴퓨터가 숫자 하나를 선택합니다.\n\n\n");
 	
-	srand((unsigned int)time(NULL)); //컴퓨터가 선택하는 숫자 랜덤 발생  
+	srand((unsigned int)time(NULL));
 	
-	numbyCom = 1+rand()%(N*N);
+	numbyCom = 1+rand()%(N*N); //컴퓨터가 선택하는 숫자 랜덤 발생
 	
-	if(numbyCom == numbyMe){
+	if(numbyCom == numbyMe)
+	{
 		get_number_byCom(numbyCom);
 	} //랜덤 발생한 숫자가 내가 선택한 숫자와 같을 경우 다시 실행  
 }
 
-void process_bingo(int selectednum, int bingotable[N][N]){
+int process_bingo(int selectednum, int bingotable[N][N]){
 	
 	int i, j;
 	
-	for (i=0; i<N; i++){
-		for (j=0; j<N; j++){
-			if(bingotable[i][j] == selectednum){
-				bingotable[i][j] = -1;
+	for (i=0; i<N; i++)
+	{
+		for (j=0; j<N; j++)
+		{
+			if(bingotable[i][j] == selectednum)
+			{
+				bingotable[i][j] = -1; //선택한 숫자(numbyMe, numbyCom)를 빙고판에서 -1로 바뀌도록 함. 
 			}
 			
 		}
@@ -146,3 +170,34 @@ void process_bingo(int selectednum, int bingotable[N][N]){
 }
 
 //numbyMe - call by reference 해결하기
+
+int count_bingo(int bingotable[N][N], int count){
+	
+	int i, j;
+	
+	 //가로, 세로, 대각선의 합이 -1*N이 되면 빙고 한 줄 완성 
+	 
+	 for (i=0; i<N; i++)
+	 {
+	 	for (j=0; j<N; j++)
+	 	{
+	 		if(i==j)
+	 		{
+	 			
+			 }
+		 }
+	 } //대각선 빙고수 세기  
+	 
+}
+
+
+
+
+
+
+
+
+
+
+
+
