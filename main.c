@@ -6,19 +6,26 @@
 #define M 3 // 빙고 이기는 조건 기호상수  
 
 
+int initiate_bingo(int bingotable[N][N]);
+int print_bingo(int bingotable[N][N]);
+int get_number_byMe(int numbyMe, int numbyCom);
+int get_number_byCom(int numbyCom, int numbyMe);
+int process_bingo(int selectednum, int bingotable[N][N]);
+int count_bingo(int bingotable[N][N], int count);
+
+   
+int tableMe[N][N]; //내 빙고 테이블 
+int tableCom[N][N]; //컴퓨터 빙고 테이블
+	
+int numbyMe; //내가 선택한 숫자 
+int numbyCom; //컴퓨터가 선택한 숫자 
+	
+int countMe = 0; //내 빙고줄 수  
+int countCom = 0; //컴퓨터 빙고줄 수    
+	
+int turn = 0; //turn수 선언 및 초기화  
+
 int main(void){
-	
-	
-	int tableMe[N][N]; //내 빙고 테이블 
-	int tableCom[N][N]; //컴퓨터 빙고 테이블
-	
-	int numbyMe; //내가 선택한 숫자 
-	int numbyCom; //컴퓨터가 선택한 숫자 
-	
-	int countMe = 0; //내 빙고줄 수  
-	int countCom = 0; //컴퓨터 빙고줄 수    
-	
-	int turn = 0; //turn수 선언 및 초기화  
 	
 	printf("#빙고 게임을 시작합니다.#\n");
 	printf("#빙고판을 %i줄 먼저 채울 시 승리합니다.#\n\n", M); 
@@ -32,7 +39,6 @@ int main(void){
     {	
         printf("<현재 당신의 빙고판>\n\n");
         print_bingo(tableMe); //내 빙고 테이블 화면에 출력
-        print_bingo(tableCom); //*********지우기************************************************* 
     	
     	get_number_byMe(numbyMe, numbyCom); //내가 숫자 선택  
     	get_number_byCom(numbyCom, numbyMe); //컴퓨터가 숫자 선택  
@@ -71,12 +77,11 @@ int main(void){
 	return 0;
 }
 
-
 int initiate_bingo(int bingotable[N][N]){ //bingotable = 빙고 테이블을 만드는 2차원 배열 
 	
 	
 	int i, j;
-	int table[N*N]; 
+	int table[N*N]; //1차원 배열로  
 	int x;
 	
 	for (i=0; i<N; i++)
@@ -98,12 +103,12 @@ int initiate_bingo(int bingotable[N][N]){ //bingotable = 빙고 테이블을 만드는 2�
 		{
 			while (1)
 			{
-				x = 1+rand()%(N*N);
+				x = 1+rand()%(N*N); //난수 발생  
 				
 				if (table[x-1] == 0)
 				{
 					bingotable[i][j] = x;
-					table[x-1] = 1;
+					table[x-1] = 1; //중복 제거  
 					break;
 				 } 
 			}
@@ -198,7 +203,7 @@ int count_bingo(int bingotable[N][N], int count){
 	 	{
 	 		sum += bingotable[i][j];
 	 		
-	 		if(sum == -1*N) //선택된 숫자는 -1로 바뀜. 합이 -1*N이 되면 모두 선택됐음, 즉 빙고가 됐음을 의미함  
+	 		if(sum == (-1)*N) //선택된 숫자는 -1로 바뀜. 합이 -1*N이 되면 모두 선택됐음, 즉 빙고가 됐음을 의미함  
 	 		{
 	 			count++; //빙고 수 증가  
 			 }
@@ -211,7 +216,7 @@ int count_bingo(int bingotable[N][N], int count){
 	 	{
 	 		sum += bingotable[i][j];
 	 		
-	 		if(sum == -1*N)
+	 		if(sum == (-1)*N)
 	 		{
 	 			count++;
 			 }
@@ -226,7 +231,7 @@ int count_bingo(int bingotable[N][N], int count){
 	 		{
 	 			sum += bingotable[i][j];
 	 			
-	 			if(sum == -1*N)
+	 			if(sum == (-1)*N)
 	 			{
 	 				count++;
 				 }
@@ -242,7 +247,7 @@ int count_bingo(int bingotable[N][N], int count){
 	 		{
 	 			sum += bingotable[i][j];
 	 			
-	 			if(sum == -1*N)
+	 			if(sum == (-1)*N)
 	 			{
 	 				count++;
 				 }
