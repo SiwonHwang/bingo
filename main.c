@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 5 // 빙고 테이블 기호상수  
+#define N 4 // 빙고 테이블 기호상수  
 #define M 3 // 빙고 이기는 조건 기호상수  
 
 
@@ -12,8 +12,8 @@ int main(void){
 	int tableMe[N][N]; //내 빙고 테이블 
 	int tableCom[N][N]; //컴퓨터 빙고 테이블
 	
-	int numbyMe = 0; //내가 선택한 숫자 
-	int numbyCom = 0; //컴퓨터가 선택한 숫자 
+	int numbyMe; //내가 선택한 숫자 
+	int numbyCom; //컴퓨터가 선택한 숫자 
 	
 	int countMe = 0; //내 빙고줄 수  
 	int countCom = 0; //컴퓨터 빙고줄 수    
@@ -24,15 +24,15 @@ int main(void){
 	printf("#빙고판을 %i줄 먼저 채울 시 승리합니다.#\n\n", M); 
 	printf("------------------------------------\n\n");
 	
-	initiate_bingo(N, tableMe); //내 빙고 테이블 만들어줌  
-    initiate_bingo(N, tableCom); //컴퓨터 빙고 테이블 만들어줌  
+	initiate_bingo(tableMe); //내 빙고 테이블 만들어줌  
+    initiate_bingo(tableCom); //컴퓨터 빙고 테이블 만들어줌  
       
     
     do
     {	
         printf("<현재 당신의 빙고판>\n\n");
-        print_bingo(N, tableMe); //내 빙고 테이블 화면에 출력
-        print_bingo(N, tableCom); //*********지우기************************************************* 
+        print_bingo(tableMe); //내 빙고 테이블 화면에 출력
+        print_bingo(tableCom); //*********지우기************************************************* 
     	
     	get_number_byMe(numbyMe, numbyCom); //내가 숫자 선택  
     	get_number_byCom(numbyCom, numbyMe); //컴퓨터가 숫자 선택  
@@ -72,36 +72,53 @@ int main(void){
 }
 
 
-int initiate_bingo(int n, int bingotable[n][n]){ //bingotable = 빙고 테이블을 만드는 2차원 배열 
+int initiate_bingo(int bingotable[N][N]){ //bingotable = 빙고 테이블을 만드는 2차원 배열 
+	
 	
 	int i, j;
-	int max=n*n;
+	int table[N*N]; 
+	int x;
 	
-	srand((unsigned)time(NULL));
-
-
-	for (i=0; i<max; i++){
-		bingotable[0][i] = 1+rand()%max; //빙고 테이블에 난수 발생  
-		
-		for (j=0; j<i; j++)
+	for (i=0; i<N; i++)
+	{
+		for (j=0; j<N; j++)
 		{
-			if (bingotable[0][j] == bingotable[0][i])
-			{
-				i--; 
-				break;
-			}
-		} //빙고 테이블 중복 제거  
+			bingotable[i][j] = 0; //빙고 테이블 초기화  
+		}
 	}
+	
+	for (i=0; i<N*N; i++)
+	{
+		table[i] = 0;
+	}
+	
+	for(i=0; i<N; i++)
+	{
+		for(j=0; j<N; j++)
+		{
+			while (1)
+			{
+				x = 1+rand()%(N*N);
+				
+				if (table[x-1] == 0)
+				{
+					bingotable[i][j] = x;
+					table[x-1] = 1;
+					break;
+				 } 
+			}
+		}
+	} //난수 발생시킨 후 중복 제거  
 
 }
 	
-int print_bingo(int n, int bingotable[N][N]){
+int print_bingo(int bingotable[N][N]){
 	
 	int i, j;
 	
-	for (i=0; i<n; i++)
+	for (i=0; i<N; i++)
 	{
-		for (j=0; j<n; j++)
+		for (j=0; j<N; j++)
 		{
 			printf("%2d ", bingotable[i][j]);
 		}
@@ -158,7 +175,7 @@ int process_bingo(int selectednum, int bingotable[N][N]){
 	{
 		for (j=0; j<N; j++)
 		{
-			if(bingotable[i][j] == selectednum)
+			if (bingotable[i][j] == selectednum)
 			{
 				bingotable[i][j] = -1; //선택한 숫자를 빙고판에서 -1로 바뀌도록 함. 
 			}
